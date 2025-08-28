@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <!-- 适配移动端，企业微信内嵌网页更友好 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>中巴、大巴租赁报价查询</title>
+  <style>
+    /* 简单样式，让页面更规整 */
+    body {
+      font-family: "Microsoft Yahei", sans-serif;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+    
+    h3 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .select-group {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap; /* 小屏幕自动换行 */
+    }
+    
+    select {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      flex: 1;
+      min-width: 150px;
+    }
+    
+    #result {
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      min-height: 50px;
+      font-size: 16px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <h3>深圳市光明区凤凰城实验学校中巴、大巴租赁报价查询</h3>
+  
+  <div class="select-group">
+    <!-- 区域选择下拉框 -->
+    <select id="area">
+      <option value="">请选择区域</option>
+      <option value="罗湖区">罗湖区</option>
+      <option value="福田区">福田区</option>
+      <option value="南山区">南山区</option>
+      <option value="宝安区">宝安区</option>
+      <option value="光明区">光明区</option>
+      <option value="龙岗区">龙岗区</option>
+      <option value="盐田区">盐田区</option>
+      <option value="龙华区">龙华区</option>
+      <option value="南澳、大鹏、坪山">南澳、大鹏、坪山</option>
+    </select>
+
+    <!-- 车型选择下拉框 -->
+    <select id="carType">
+      <option value="">请选择车型</option>
+      <option value="20座中巴">20座中巴</option>
+      <option value="34座大中巴">34座大中巴</option>
+      <option value="48座大巴">48座大巴</option>
+      <option value="53座大巴">53座大巴</option>
+    </select>
+
+    <!-- 行程类型选择下拉框 -->
+    <select id="tripType">
+      <option value="">请选择行程类型</option>
+      <option value="单趟（单接/单送）">单趟（单接/单送）</option>
+      <option value="往返（或按天一趟）">往返（或按天一趟）</option>
+    </select>
+  </div>
+
+  <!-- 结果显示区域 -->
+  <div id="result">请选择区域、车型和行程类型，查询对应报价</div>
+  
+  <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/94f1fc036c7840f1a2e499d63fddeaa8.png~tplv-a9rns2rl98-24:720:720.png?rk3s=1fb89129&x-expires=1756889266&x-signature=IJC4PIsd1sV90tkwvOp%2FHykRirY%3D" alt="戴眼镜的男性面部图像" />
+  
+  <script>
+    // 报价数据（与表格完全对应）
+    const priceData = {
+      "罗湖区": {
+        "20座中巴": {
+          "单趟（单接/单送）": "650元",
+          "往返（或按天一趟）": "800元"
+        },
+        "34座大中巴": {
+          "单趟（单接/单送）": "700元",
+          "往返（或按天一趟）": "850元"
+        },
+        "48座大巴": {
+          "单趟（单接/单送）": "800元",
+          "往返（或按天一趟）": "900元"
+        },
+        "53座大巴": {
+          "单趟（单接/单送）": "900元",
+          "往返（或按天一趟）": "1000元"
+        }
+      },
+      "福田区": {
+        "20座中巴": {
+          "单趟（单接/单送）": "650元",
+          "往返（或按天一趟）": "800元"
+        },
+        "34座大中巴": {
+          "单趟（单接/单送）": "700元",
+          "往返（或按天一趟）": "850元"
+        },
+        "48座大巴": {
+          "单趟（单接/单送）": "750元",
+          "往返（或按天一趟）": "900元"
+        },
+        "53座大巴": {
+          "单趟（单接/单送）": "850元",
+          "往返（或按天一趟）": "1000元"
+        }
+      },
+      "南山区": {
+        "20座中巴": {
+          "单趟（单接/单送）": "650元",
+          "往返（或按天一趟）": "700元"
+        },
+        "34座大中巴": {
+          "单趟（单接/单送）": "700元",
+          "往返（或按天一趟）": "800元"
+        },
+        "48座大巴": {
+          "单趟（单接/单送）": "750元",
+          "往返（或按天一趟）": "900元"
+        },
+        "53座大巴": {
+          "单趟（单接/单送）": "850元",
+          "往返（或按天一趟）": "1000元"
+        }
+      },
+      "宝安区": {
+        "20座中巴": {
+          "单趟（单接/单送）": "650元",
+          "往返（或按天一趟）": "700元"
+        },
+        "34座大中巴": {
+          "单趟（单接/单送）": "700元",
+          "往返（或按天一趟）": "850元"
+        },
+        "48座大巴": {
+          "单趟（单接/单送）": "750元",
+          "往返（或按天一趟）": "900元"
+        },
+        "53座大巴": {
+          "单趟（单接/单送）": "850元",
+          "往返（或按天一趟）": "1000元"
+        }
+      },
+      "光明区": {
+        "20座中巴": {
+          "单趟（单接/单送）": "600元",
+          "往返（或按天一趟）": "700元"
+        },
+        "34座大中巴": {
+          "单趟（单接/单送）": "650元",
+          "往返（或按天一趟）": "750元"
+        },
+        "48座大巴": {
+          "单趟（单接/单送）": "700元",
+          "往返（或按天一趟）": "800元"
+        },
+        "53座大巴": {
+          "单趟（单接/单送）": "800元",
+          "往返（或按天一趟）": "900元"
+        }
+      },
+      "龙岗区": {
+        "20座中巴": {
+          "单趟（单接/单送）": "650元",
+          "往返（或按天一趟）": "800元"
+        },
+        "34座大中巴": {
+          "单趟（单接/单送）": "700元",
+          "往返（或按天一趟）": "850元"
+        },
+        "48座大巴": {
+          "单趟（单接/单送）": "750元",
+          "往返（或按天一趟）": "900元"
+        },
+        "53座大巴": {
+          "单趟（单接/单送）": "850元",
+          "往返（或按天一趟）": "1000元"
+        }
+      },
+      "盐田区": {
+        "20座中巴": {
+          "单趟（单接/单送）": "650元",
+          "往返（或按天一趟）": "800元"
+        },
+        "34座大中巴": {
+          "单趟（单接/单送）": "700元",
+          "往返（或按天一趟）": "850元"
+        },
+        "48座大巴": {
+          "单趟（单接/单送）": "750元",
+          "往返（或按天一趟）": "900元"
+        },
+        "53座大巴": {
+          "单趟（单接/单送）": "850元",
+          "往返（或按天一趟）": "1000元"
+        }
+      },
+      "龙华区": {
+        "20座中巴": {
+          "单趟（单接/单送）": "600元",
+          "往返（或按天一趟）": "700元"
+        },
+        "34座大中巴": {
+          "单趟（单接/单送）": "650元",
+          "往返（或按天一趟）": "750元"
+        },
+        "48座大巴": {
+          "单趟（单接/单送）": "700元",
+          "往返（或按天一趟）": "800元"
+        },
+        "53座大巴": {
+          "单趟（单接/单送）": "800元",
+          "往返（或按天一趟）": "900元"
+        }
+      },
+      "南澳、大鹏、坪山": {
+        "20座中巴": {
+          "单趟（单接/单送）": "800元",
+          "往返（或按天一趟）": "1000元"
+        },
+        "34座大中巴": {
+          "单趟（单接/单送）": "850元",
+          "往返（或按天一趟）": "1050元"
+        },
+        "48座大巴": {
+          "单趟（单接/单送）": "900元",
+          "往返（或按天一趟）": "1100元"
+        },
+        "53座大巴": {
+          "单趟（单接/单送）": "1000元",
+          "往返（或按天一趟）": "1100元"
+        }
+      }
+    };
+
+    // 获取DOM元素
+    const areaSelect = document.getElementById("area");
+    const carTypeSelect = document.getElementById("carType");
+    const tripTypeSelect = document.getElementById("tripType");
+    const resultDiv = document.getElementById("result");
+
+    // 监听三个下拉框的"change"事件（选择变化时触发）
+    [areaSelect, carTypeSelect, tripTypeSelect].forEach(select => {
+      select.addEventListener("change", () => {
+        const area = areaSelect.value;
+        const carType = carTypeSelect.value;
+        const tripType = tripTypeSelect.value;
+
+        // 若三个选项未选全，提示用户
+        if (!area || !carType || !tripType) {
+          resultDiv.textContent = "请选择区域、车型和行程类型，查询对应报价";
+          return;
+        }
+
+        // 从数据中匹配对应报价
+        const price = priceData[area]?.[carType]?.[tripType] || "暂无报价";
+        resultDiv.textContent = `对应报价为：${price}`;
+      });
+    });
+  </script>
+</body>
+</html>
